@@ -1,0 +1,58 @@
+{
+  "name": "@turbostarter/db",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/db/index.d.ts",
+      "default": "./src/db/index.ts"
+    },
+    "./client": {
+      "types": "./dist/db/client.d.ts",
+      "default": "./src/db/client.ts"
+    },
+    "./schema": {
+      "types": "./dist/db/schema/index.d.ts",
+      "default": "./src/db/schema/index.ts"
+    },
+    "./env": {
+      "types": "./dist/env.d.ts",
+      "default": "./src/env.ts"
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "clean": "git clean -xdf .cache .turbo dist node_modules",
+    "dev": "tsc",
+    "db:start": "supabase start",
+    "db:stop": "supabase stop",
+    "db:setup": "pnpm run db:start && pnpm run db:migrate",
+    "db:migrate": "drizzle-kit migrate",
+    "db:push": "drizzle-kit push",
+    "db:generate": "drizzle-kit generate",
+    "db:check": "drizzle-kit check",
+    "format": "prettier --check . --ignore-path ../../.gitignore",
+    "lint": "eslint",
+    "typecheck": "tsc --noEmit --emitDeclarationOnly false"
+  },
+  "devDependencies": {
+    "@turbostarter/eslint-config": "workspace:*",
+    "@turbostarter/prettier-config": "workspace:*",
+    "@turbostarter/tsconfig": "workspace:*",
+    "dotenv-cli": "7.4.2",
+    "drizzle-kit": "0.24.0",
+    "eslint": "catalog:",
+    "prettier": "catalog:",
+    "supabase": "1.188.4",
+    "typescript": "catalog:"
+  },
+  "prettier": "@turbostarter/prettier-config",
+  "dependencies": {
+    "@t3-oss/env-core": "0.11.0",
+    "drizzle-orm": "0.33.0",
+    "drizzle-zod": "0.5.1",
+    "postgres": "3.4.4",
+    "zod": "catalog:"
+  }
+}

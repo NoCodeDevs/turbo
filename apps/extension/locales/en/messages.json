@@ -1,0 +1,10 @@
+{
+  "extensionDescription": {
+    "description": "Description of the extension.",
+    "message": "Ship your startup everywhere. In minutes."
+  },
+  "extensionName": {
+    "description": "Name of the extension.",
+    "message": "TurboStarter"
+  }
+}

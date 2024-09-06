@@ -1,0 +1,46 @@
+name: CI / Publish web
+
+on:
+  workflow_dispatch:
+
+env:
+  NODE_VERSION: 20.x
+
+jobs:
+  web:
+    name: 🚀 Publish web
+    runs-on: ubuntu-latest
+    environment: Production
+    env:
+      VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+      VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+
+    steps:
+      - name: ✅ Checkout code
+        uses: actions/checkout@v4
+
+      - name: 🔥 Run tests
+        uses: convictional/trigger-workflow-and-wait@v1.6.1
+        with:
+          owner: turbostarter
+          repo: main
+          github_token: ${{ secrets.CI_ACCESS_TOKEN }}
+          workflow_file_name: tests.yml
+          ref: ${{ github.ref }}
+
+      - name: 🔨 Setup
+        uses: ./tooling/github/setup
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: 🔼 Install Vercel CLI
+        run: pnpm install --global vercel@latest
+
+      - name: 💪 Pull environment information
+        run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
+
+      - name: 📦 Build
+        run: vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
+
+      - name: 💨 Publish!
+        run: vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }}

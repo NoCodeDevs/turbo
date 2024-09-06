@@ -1,0 +1,46 @@
+name: CI / Publish extension
+
+on:
+  workflow_dispatch:
+
+env:
+  NODE_VERSION: 20.x
+
+jobs:
+  web:
+    name: 🚀 Publish extension
+    runs-on: ubuntu-latest
+    environment: Production
+
+    steps:
+      - name: ✅ Checkout code
+        uses: actions/checkout@v4
+
+      - name: 🔥 Run tests
+        uses: convictional/trigger-workflow-and-wait@v1.6.1
+        with:
+          owner: turbostarter
+          repo: main
+          github_token: ${{ secrets.CI_ACCESS_TOKEN }}
+          workflow_file_name: tests.yml
+          ref: ${{ github.ref }}
+
+      - name: 🔨 Setup
+        uses: ./tooling/github/setup
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: 📦 Build
+        run: pnpm build:extension
+
+      - name: 🗃️ Archive artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ github.sha }}
+          path: apps/extension/build/chrome-mv3-prod
+
+      - name: 💨 Publish!
+        uses: PlasmoHQ/bpp@v3
+        with:
+          artifact: apps/extension/build/chrome-mv3-prod.zip
+          keys: ${{ secrets.EXTENSION_SUBMIT_KEYS }}

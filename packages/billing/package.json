@@ -1,0 +1,45 @@
+{
+  "name": "@turbostarter/billing",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./src/index.ts"
+    },
+    "./api": {
+      "types": "./dist/api.d.ts",
+      "default": "./src/api.ts"
+    },
+    "./env": {
+      "types": "./dist/env/index.d.ts",
+      "default": "./src/env/index.ts"
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "clean": "git clean -xdf .cache .turbo dist node_modules",
+    "dev": "tsc",
+    "format": "prettier --check . --ignore-path ../../.gitignore",
+    "lint": "eslint",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@turbostarter/eslint-config": "workspace:*",
+    "@turbostarter/prettier-config": "workspace:*",
+    "@turbostarter/tsconfig": "workspace:*",
+    "eslint": "catalog:",
+    "prettier": "catalog:",
+    "typescript": "catalog:"
+  },
+  "prettier": "@turbostarter/prettier-config",
+  "dependencies": {
+    "@lemonsqueezy/lemonsqueezy.js": "3.2.0",
+    "@t3-oss/env-core": "0.11.0",
+    "@turbostarter/auth": "workspace:*",
+    "@turbostarter/db": "workspace:*",
+    "@turbostarter/shared": "workspace:*",
+    "stripe": "16.8.0"
+  }
+}

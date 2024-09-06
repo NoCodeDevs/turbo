@@ -1,0 +1,5 @@
+{
+  "extends": "@turbostarter/tsconfig/base.json",
+  "include": ["."],
+  "exclude": ["node_modules"]
+}

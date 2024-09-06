@@ -1,0 +1,41 @@
+name: CI / Publish mobile
+
+on:
+  workflow_dispatch:
+
+env:
+  NODE_VERSION: 20.x
+
+jobs:
+  web:
+    name: 🚀 Publish mobile
+    runs-on: ubuntu-latest
+    environment: Production
+
+    steps:
+      - name: ✅ Checkout code
+        uses: actions/checkout@v4
+
+      - name: 🔥 Run tests
+        uses: convictional/trigger-workflow-and-wait@v1.6.1
+        with:
+          owner: turbostarter
+          repo: main
+          github_token: ${{ secrets.CI_ACCESS_TOKEN }}
+          workflow_file_name: tests.yml
+          ref: ${{ github.ref }}
+
+      - name: 🔨 Setup
+        uses: ./tooling/github/setup
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: 🏗 Setup EAS
+        uses: expo/expo-github-action@v8
+        with:
+          eas-version: latest
+          token: ${{ secrets.EXPO_TOKEN }}
+
+      - name: 💨 Publish!
+        run: cd apps/mobile && eas build --platform all --profile preview --non-interactive --no-wait
+        # run: cd apps/mobile && eas build --platform all --profile production --non-interactive --no-wait --auto-submit

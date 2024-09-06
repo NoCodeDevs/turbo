@@ -1,0 +1,67 @@
+{
+  "name": "extension",
+  "displayName": "__MSG_extensionName__",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "plasmo build --zip",
+    "clean": "git clean -xdf .cache .next .turbo node_modules",
+    "dev": "plasmo dev",
+    "format": "prettier --check . --ignore-path ../../.gitignore",
+    "lint": "eslint",
+    "typecheck": "tsc --noEmit"
+  },
+  "prettier": "@turbostarter/prettier-config",
+  "dependencies": {
+    "@plasmohq/messaging": "0.6.2",
+    "@plasmohq/storage": "1.11.0",
+    "@t3-oss/env-core": "0.11.0",
+    "@tanstack/react-query": "catalog:",
+    "@trpc/client": "catalog:",
+    "@trpc/react-query": "catalog:",
+    "@trpc/server": "catalog:",
+    "@turbostarter/api": "workspace:*",
+    "@turbostarter/auth": "workspace:*",
+    "@turbostarter/billing": "workspace:*",
+    "@turbostarter/shared": "workspace:*",
+    "@turbostarter/ui": "workspace:*",
+    "@turbostarter/ui-web": "workspace:*",
+    "plasmo": "0.89.1",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "superjson": "2.2.1",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@turbostarter/eslint-config": "workspace:*",
+    "@turbostarter/prettier-config": "workspace:*",
+    "@turbostarter/tailwind-config": "workspace:*",
+    "@turbostarter/tsconfig": "workspace:*",
+    "@types/chrome": "0.0.258",
+    "@types/node": "20.14.9",
+    "@types/react": "catalog:react18",
+    "@types/react-dom": "catalog:react18",
+    "eslint": "catalog:",
+    "prettier": "catalog:",
+    "typescript": "catalog:"
+  },
+  "manifest": {
+    "name": "__MSG_extensionName__",
+    "default_locale": "en",
+    "host_permissions": [
+      "<all_urls>"
+    ],
+    "permissions": [
+      "storage",
+      "sidePanel",
+      "scripting",
+      "cookies"
+    ],
+    "browser_specific_settings": {
+      "gecko": {
+        "id": "extension@turbostarter.dev"
+      }
+    }
+  }
+}
